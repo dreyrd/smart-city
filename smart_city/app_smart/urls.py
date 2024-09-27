@@ -8,7 +8,7 @@ from rest_framework_simplejwt.views import (
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-# router.register(r'tipos_sensor', TipoSensorViewSet)
+router.register(r'tipos_sensor', TipoSensorViewSet)
 router.register(r'sensor', SensorViewSet)
 
 urlpatterns = [

@@ -1,6 +1,6 @@
-// const getToken = () => {
-//     return localStorage.getItem('token'); // Use localStorage em vez de AsyncStorage
-// };
+const getToken = () => {
+    return localStorage.getItem('token'); // Use localStorage em vez de AsyncStorage
+};
 
 document.getElementById('criar-usuario').addEventListener('submit', function(e){
     e.preventDefault();
@@ -13,7 +13,12 @@ document.getElementById('criar-usuario').addEventListener('submit', function(e){
     formData.append('email', email);
     formData.append('password', password);
 
-    // const token = getToken();
+    const token = getToken();
+
+    if (!token) {
+        alert('Sessão encerrada');
+        return;
+    }
 
     axios.post('http://127.0.0.1:8000/api/criarusuario/', formData, {
         headers: {
@@ -28,9 +33,8 @@ document.getElementById('criar-usuario').addEventListener('submit', function(e){
         alert('Erro ao criar usuario');
     })
 
+    
 
 
 
-
-
-    })
+})

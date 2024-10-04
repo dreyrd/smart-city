@@ -12,7 +12,7 @@ router.register(r'tipos_sensor', TipoSensorViewSet)
 router.register(r'sensor', SensorViewSet)
 
 urlpatterns = [
-    path('', views.abre_index, name='abre_index'),
+    path('api/enviar_csv/', views.upload_csv_view, name='enviar_csv'),
     path('api/criarusuario/', CreateUserAPIView.as_view(), name='criar_usuario'),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),

@@ -21,7 +21,7 @@ document.getElementById('login-usuario').addEventListener('submit', function(e){
                 
                 localStorage.setItem('token', token);
 
-                window.location.href = './pages/cadastro.html'
+                window.location.href = './pages/menu.html'
             }
             else{
                 alert('erro de token vazio');

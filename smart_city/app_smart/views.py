@@ -22,11 +22,10 @@ def upload_csv_view(request):
         if form.is_valid():
             csv_file = request.FILES['file']
             
-            # Verifica se o arquivo tem a extensão correta
             if not csv_file.name.endswith('.csv'):
                 form.add_error('file', 'Este não é um arquivo CSV válido.')
             else:
-                # Processa o arquivo CSV
+                
                 file_data = csv_file.read().decode('ISO-8859-1').splitlines()
                 reader = csv.DictReader(file_data, delimiter=',')  # Altere para ',' se necessário
                 
@@ -35,10 +34,10 @@ def upload_csv_view(request):
                     
                     
                     try:
-                        id_tipo = Tipos_sensor.objects.get(tipo=row['tipo'])
+                        id_tipo = Tipos_sensor.objects.filter(tipo=row['tipo']).first()
                     except Tipos_sensor.DoesNotExist:
                         Tipos_sensor.objects.create(tipo=row['tipo'])
-                        id_tipo = Tipos_sensor.objects.get(tipo=row['tipo'])
+                        id_tipo = Tipos_sensor.objects.filter(tipo=row['tipo']).first()
                     
                     try:
                         Sensor.objects.create(

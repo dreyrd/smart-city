@@ -6,6 +6,8 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 from rest_framework.routers import DefaultRouter
+from app_smart.api.filters import SensorFilterView
+
 
 router = DefaultRouter()
 router.register(r'tipos_sensor', TipoSensorViewSet)
@@ -16,5 +18,6 @@ urlpatterns = [
     path('api/criarusuario/', CreateUserAPIView.as_view(), name='criar_usuario'),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/', include(router.urls))
+    path('api/', include(router.urls)),
+    path('api/sensor_filter/', SensorFilterView.as_view(), name='sensor_filter')
 ]

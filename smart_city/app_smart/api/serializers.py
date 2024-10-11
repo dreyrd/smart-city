@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
-from app_smart.models import Sensor, Tipos_sensor
+from app_smart.models import Sensor, Tipos_sensor, TemperaturaData, UmidadeData, ContadorData, LuminosidadeData
 from rest_framework import serializers
 
 
@@ -14,6 +14,22 @@ class SensorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sensor
         fields = '__all__'
+        
+class UmidadeDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UmidadeData
+        fields = '__all__'
+
+class ContadorDataSerializaer(serializers.ModelSerializer):
+    class Meta:
+        model = ContadorData
+        fields = '__all__'
+        
+class LuminosidadeDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LuminosidadeData
+        fields = '__all__'
+        
 
 
 
@@ -30,3 +46,8 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'username', 'email', 'password']
         extra_kwargs = {'senha': {'write_only': True}}
+
+class TemperaturaDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TemperaturaData
+        fields = '__all__'

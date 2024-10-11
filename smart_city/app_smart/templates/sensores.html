@@ -22,13 +22,13 @@
         width: 100%;
     }
 
-    #enviar-csv{
+    .enviar-csv{
         display: flex;
         flex-direction: column;
         align-items: center;
     }
     
-    #enviar-csv > input[type="submit"]{
+    .enviar-csv > input[type="submit"]{
         cursor: pointer;
         background-color: #74a57f;
         color: white;
@@ -44,10 +44,31 @@
 
 
     <main>
-        <form method="POST" enctype="multipart/form-data" id="enviar-csv">
+        <h2>Registrar sensores</h2>
+        <form method="POST" enctype="multipart/form-data" class="enviar-csv">
 
             {% csrf_token %}
             {{ form.as_p }}
+
+            <input type="submit" value="Enviar">
+
+        </form>
+
+        <h2>Registrar temperatura dos sensores</h2>
+        <form method="POST" enctype="multipart/form-data" class="enviar-csv">
+
+            {% csrf_token %}
+            {{ form_temperatura.as_p }}
+
+            <input type="submit" value="Enviar">
+
+        </form>
+
+        <h2>Registrar umidade dos sensores</h2>
+        <form method="POST" enctype="multipart/form-data" class="enviar-csv">
+
+            {% csrf_token %}
+            {{ form_umidade.as_p }}
 
             <input type="submit" value="Enviar">
 

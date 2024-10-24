@@ -36,6 +36,18 @@ class UmidadeDataViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     
 
+class LuminosidadeDataViewSet(viewsets.ModelViewSet):
+    queryset = LuminosidadeData.objects.all()
+    serializer_class = serializers.LuminosidadeDataSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
+
+class ContadorDataViewSet(viewsets.ModelViewSet):
+    queryset = ContadorData.objects.all()
+    serializer_class = serializers.ContadorDataSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
+
 
 class CreateUserAPIView(generics.CreateAPIView):
     query = User.objects.all()

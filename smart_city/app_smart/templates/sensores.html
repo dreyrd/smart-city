@@ -50,7 +50,7 @@
             {% csrf_token %}
             {{ form.as_p }}
 
-            <input type="submit" value="Enviar">
+            <input type="submit" name="submit_sensores" value="Enviar">
 
         </form>
 
@@ -60,7 +60,7 @@
             {% csrf_token %}
             {{ form_temperatura.as_p }}
 
-            <input type="submit" value="Enviar">
+            <input type="submit" name="submit_temperatura" value="Enviar">
 
         </form>
 
@@ -70,7 +70,27 @@
             {% csrf_token %}
             {{ form_umidade.as_p }}
 
-            <input type="submit" value="Enviar">
+            <input type="submit" name="submit_umidade" value="Enviar">
+
+        </form>
+
+        <h2>Registrar luminosidade dos sensores</h2>
+        <form method="POST" enctype="multipart/form-data" class="enviar-csv">
+
+            {% csrf_token %}
+            {{ form_luminosidade.as_p }}
+
+            <input type="submit" name="submit_luminosidade" value="Enviar">
+
+        </form>
+
+        <h2>Registrar pessoas que passaram nos sensores</h2>
+        <form method="POST" enctype="multipart/form-data" class="enviar-csv">
+
+            {% csrf_token %}
+            {{ form_contador.as_p }}
+
+            <input type="submit" name="submit_contador" value="Enviar">
 
         </form>
     </main>

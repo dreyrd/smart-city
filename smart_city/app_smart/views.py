@@ -73,7 +73,10 @@ django.setup()
 
 
 def upload_csv_view(request):
+    
+    
     if request.method == 'POST':
+        
         form = CSVUploadForm(request.POST, request.FILES)
         
         form_temperatura = CSVUploadForm(request.POST, request.FILES)
@@ -81,7 +84,11 @@ def upload_csv_view(request):
         
         form_umidade = CSVUploadForm(request.POST, request.FILES)
         
-        if form_temperatura.is_valid():
+        form_luminosidade = CSVUploadForm(request.POST, request.FILES)
+        
+        form_contador = CSVUploadForm(request.POST, request.FILES)
+            
+        if form_temperatura.is_valid() and 'submit_temperatura' in request.POST:
             csv_file = request.FILES['file']
             
             if not csv_file.name.endswith('.csv'):
@@ -90,6 +97,8 @@ def upload_csv_view(request):
                 
                 file_data = csv_file.read().decode('ISO-8859-1').splitlines()
                 reader = csv.DictReader(file_data, delimiter=',')  # Altere para ',' se necessário
+                print(file_data)
+                print(reader)
                 
                 for row in reader:
                     
@@ -110,7 +119,7 @@ def upload_csv_view(request):
         else:
             form_temperatura = CSVUploadForm()
         
-        if form.is_valid():
+        if form.is_valid() and 'submit_sensores' in request.POST:
             csv_file = request.FILES['file']
             
             if not csv_file.name.endswith('.csv'):
@@ -150,25 +159,18 @@ def upload_csv_view(request):
             form = CSVUploadForm()
             
         
-        if form_umidade.is_valid():
+        if form_umidade.is_valid() and 'submit_umidade' in request.POST:
             csv_file = request.FILES['file']
             
             if not csv_file.name.endswith('.csv'):
                 form_umidade.add_error('file', 'Este não é um arquivo CSV válido.')
-            else:
                 
+            else:
                 file_data = csv_file.read().decode('ISO-8859-1').splitlines()
                 reader = csv.DictReader(file_data, delimiter=',')  # Altere para ',' se necessário
                 
+                
                 for row in reader:
-                    
-                    
-                    
-                    try:
-                        id_tipo = Tipos_sensor.objects.filter(tipo=row['tipo']).first()
-                    except Tipos_sensor.DoesNotExist:
-                        Tipos_sensor.objects.create(tipo=row['tipo'])
-                        id_tipo = Tipos_sensor.objects.filter(tipo=row['tipo']).first()
                     
                     try:
                         UmidadeData.objects.create(
@@ -184,7 +186,69 @@ def upload_csv_view(request):
 
         else:
             form_umidade = CSVUploadForm()
+        
+        
+        if form_luminosidade.is_valid() and 'submit_luminosidade' in request.POST:
+            csv_file = request.FILES['file']
+            
+            if not csv_file.name.endswith('.csv'):
+                form_luminosidade.add_error('file', 'Este não é um arquivo CSV válido.')
+            else:
+                
+                file_data = csv_file.read().decode('ISO-8859-1').splitlines()
+                reader = csv.DictReader(file_data, delimiter=',')  # Altere para ',' se necessário
+                
+                for row in reader:
+                    
+                    
+                    
+                    
+                    try:
+                        sensor_id = int(row['sensor_id'])
+                        valor = float(row['valor'])
+                        timestamp = parser.parse(row['timestamp'])
+                        sensor = Sensor.objects.get(id=sensor_id)
+                        LuminosidadeData.objects.create(sensor=sensor, valor=valor, 
+                        timestamp=timestamp)
+
+                    except KeyError as e:
+                        print(f"Chave não encontrada: {e} na linha: {row}")
+                        
+                        
+        else:
+            form_luminosidade = CSVUploadForm()
+            
+        
+        if form_contador.is_valid() and 'submit_contador' in request.POST:
+            csv_file = request.FILES['file']
+            
+            if not csv_file.name.endswith('.csv'):
+                form_contador.add_error('file', 'Este não é um arquivo CSV válido.')
+                
+            else:
+                file_data = csv_file.read().decode('ISO-8859-1').splitlines()
+                reader = csv.DictReader(file_data, delimiter=',')  # Altere para ',' se necessário
+                
+                
+                for row in reader:
+                    
+                    try:
+                        if row['sensor_id'].isdigit():
+                            sensor_id = int(row['sensor_id'])
+                        else:
+                            print('a')
+
+                        timestamp = parser.parse(row['timestamp'])
+                        sensor = Sensor.objects.get(id=sensor_id)
+                        ContadorData.objects.create(sensor=sensor, timestamp=timestamp)
+
+                    except KeyError as e:
+                        print(f"Chave não encontrada: {e} na linha: {row}")  # Exibe o erro e a linha problemática
+                
+
+        else:
+            form_contador = CSVUploadForm()
            
 
-    return render(request, 'sensores.html', {'form': form, 'form_temperatura': form_temperatura, 'form_umidade': form_umidade})
+    return render(request, 'sensores.html', {'form': form, 'form_temperatura': form_temperatura, 'form_umidade': form_umidade, 'form_luminosidade': form_luminosidade, 'form_contador': form_contador})
 

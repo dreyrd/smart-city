@@ -24,5 +24,6 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/', include(router.urls)),
     path('api/sensor_filter/', SensorFilterView.as_view(), name='sensor_filter'),
-    path('api/temperatura_data_filter/', TemperaturaFilterView.as_view(), name='temperatura_filter')
+    path('api/temperatura_data_filter/', TemperaturaFilterView.as_view(), name='temperatura_filter'),
+    
 ]

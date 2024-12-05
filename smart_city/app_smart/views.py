@@ -74,19 +74,21 @@ django.setup()
 
 def upload_csv_view(request):
     
+    form = CSVUploadForm(request.POST, request.FILES)
+    
+    form_temperatura = CSVUploadForm(request.POST, request.FILES)
+    
+    
+    form_umidade = CSVUploadForm(request.POST, request.FILES)
+    
+    form_luminosidade = CSVUploadForm(request.POST, request.FILES)
+    
+    form_contador = CSVUploadForm(request.POST, request.FILES)
+    
     
     if request.method == 'POST':
         
-        form = CSVUploadForm(request.POST, request.FILES)
-        
-        form_temperatura = CSVUploadForm(request.POST, request.FILES)
-        
-        
-        form_umidade = CSVUploadForm(request.POST, request.FILES)
-        
-        form_luminosidade = CSVUploadForm(request.POST, request.FILES)
-        
-        form_contador = CSVUploadForm(request.POST, request.FILES)
+
             
         if form_temperatura.is_valid() and 'submit_temperatura' in request.POST:
             csv_file = request.FILES['file']

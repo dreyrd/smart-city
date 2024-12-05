@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-%z266ro5q^zs_%&smw5y3_0bmj4hexzj5ys#q1-ka!kqvrr4l#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://sensor-flow.web.app/']
 
 
 # Application definition
